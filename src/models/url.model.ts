@@ -14,17 +14,41 @@ async function connect() {
 }
 
 export class UrlModel {
+  //
   static async getAll() {
     const { client, db } = await connect()
-    const data = db.find().toArray()
+    const data = await db.find().toArray()
     console.log(data)
     client.close()
-    return { data: '... all data should be here' }
+    return { data }
   }
 
-  static create() {}
+  static async create({ url, name }: { url: string; name: string }) {
+    const { client, db } = await connect()
+    const newShorten = {
+      url,
+      shortCode: name,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }
+    try {
+      const { insertedId } = await db.insertOne(newShorten)
+      client.close()
+      return insertedId
+    } catch (e) {
+      client.close()
+      throw new Error('error creating data')
+    }
+  }
 
-  static view() {}
+  static async view({ short }: { short: string }) {
+    console.log(short)
+    const { client, db } = await connect()
+    const data = await db.findOne({ shortCode: short })
+    client.close()
+    return data
+    // return data
+  }
 
   static update() {}
 

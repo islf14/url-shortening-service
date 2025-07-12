@@ -1,43 +1,49 @@
-export function ShortName({ url }: { url: string }) {
-  // filter only chars
-  const clean = url.replace(/\.|(www)|(com)/g, '')
-  console.log(clean)
-  console.log('length: ', clean.length)
+import { UrlModel } from '../models/url.model'
 
-  //
+export async function ShortName({ url }: { url: string }) {
+  // filter only letters
+  const clean = url.replace(/\.|(www)|(com)/g, '')
+  // letters from url for search
   let threeCount = 3
   if (0 <= clean.length && clean.length < 3) {
     threeCount = clean.length
   }
-  //
-  const limit = 10
+  const limit = 20
   let validName = false
   let limitCount = 0
   let fiveCount = 0
+  let newName = ''
 
   // serching name
-  while (limitCount < limit && validName === false) {
+  do {
     if (threeCount > 0) {
-      while (fiveCount < 5 && validName === false) {
+      do {
         const name = clean.slice(0, threeCount) + stringRandom(3 - threeCount)
-        const newName = name + numberRandom(3)
-        console.log(newName)
+        newName = name + numberRandom(3)
+        // ask the db if the name exists
+        const data = await UrlModel.view({ short: newName })
+        if (data === null) validName = true
         fiveCount++
-        // ask the db if it exists // no found
-        // if ok then change validname to true
-      }
+      } while (fiveCount < 5 && validName === false)
+      // plus a random letter
       threeCount--
       fiveCount = 0
+      // random all name ulti limit
     } else {
-      const nn = stringRandom(3) + numberRandom(3)
-      console.log(nn)
+      newName = stringRandom(3) + numberRandom(3)
+      // ask the db if the name exists
+      const data = await UrlModel.view({ short: newName })
+      if (data === null) validName = true
       limitCount++
-      // ask the db if it exists // no found
-      // if ok then change validname to true
     }
-  }
+  } while (limitCount < limit && validName === false)
 
-  return 'new name returned'
+  // return name o error
+  if (validName === true) {
+    return newName
+  } else {
+    throw new Error('try again, name not available.')
+  }
 }
 
 //

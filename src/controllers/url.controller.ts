@@ -13,7 +13,7 @@ export class Urlcontroller {
     }
   }
 
-  public create(req: Request, res: Response) {
+  public async create(req: Request, res: Response) {
     if (!req.body || !req.body.url) {
       return res.status(400).json({ error: 'Must enter a url' })
     }
@@ -24,13 +24,44 @@ export class Urlcontroller {
       return res.status(400).json({ error: 'Enter a valid url' })
     }
     // verify name
-    const name = ShortName({ url: newUrl.host })
-    console.log(name)
-
-    return res.status(200).json(req.body.url)
+    let shortName
+    try {
+      shortName = await ShortName({ url: newUrl.host })
+    } catch (e: unknown) {
+      let message
+      if (e instanceof Error) message = e.message
+      console.log({ error: 'Error getting name: ' + message })
+      return res.status(500).json({ error: 'Error getting shorted name' })
+    }
+    // create in db
+    try {
+      const insertedId = await UrlModel.create({
+        url: newUrl.href,
+        name: shortName
+      })
+      const data = {
+        shortName,
+        insertedId
+      }
+      console.log(data)
+      return res.status(200).json(data)
+    } catch (e) {
+      return res.status(400).json('Error saving url')
+    }
   }
 
-  public view(_req: Request, _res: Response) {}
+  public async view(req: Request, res: Response) {
+    const { short } = req.params
+    if (short.length !== 6) {
+      return res.status(400).json({ error: 'pathname must be six characters' })
+    }
+    try {
+      const data = await UrlModel.view({ short })
+      return res.status(200).json(data)
+    } catch (e) {
+      return res.status(400).json({ error: 'Error in view' })
+    }
+  }
 
   public update(_req: Request, _res: Response) {}
 
