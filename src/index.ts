@@ -10,7 +10,7 @@ app.get('/', (_req, res) => {
   res.json('welcome to URL Shortening Service')
 })
 
-app.use('/api/short', urlRoute)
+app.use('/shorten', urlRoute)
 
 app.listen(port, () => {
   console.log(`Server is listening in http://localhost:${port}`)
