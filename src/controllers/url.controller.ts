@@ -56,12 +56,14 @@ export class Urlcontroller {
   }
 
   public async view(req: Request, res: Response) {
+    // verify pathname
     const { short } = req.params
     if (short.length !== 6) {
       return res.status(400).json({ error: 'pathname must be six characters' })
     }
+    // search in db
     try {
-      const data = await UrlModel.view({ short })
+      const data = await UrlModel.view({ shortCode: short })
       if (data) return res.status(200).json(data)
       else return res.status(404).json({ message: 'not found' })
     } catch (e: unknown) {
@@ -96,17 +98,28 @@ export class Urlcontroller {
     }
     try {
       const modifiedCount = await UrlModel.update(data)
-      if (modifiedCount === 0) {
-        return res.status(404).json({ error: 'Not found' })
-      }
-      return res.status(200).json(data)
+      if (modifiedCount) return res.status(200).json(data)
+      else return res.status(404).json({ error: 'Not found' })
     } catch (e: unknown) {
       let message
       if (e instanceof Error) message = e.message
       console.log({ error: 'Error updating url: ' + message })
-      return res.status(500).json('Error in update')
+      return res.status(500).json({ error: 'Error in update' })
     }
   }
 
-  public delete(_req: Request, _res: Response) {}
+  public async delete(req: Request, res: Response) {
+    // verify pathname
+    const { short } = req.params
+    if (short.length !== 6) {
+      return res.status(400).json({ error: 'pathname must be six characters' })
+    }
+    try {
+      const deletedCount = await UrlModel.delete({ shortCode: short })
+      if (deletedCount) return res.status(204).json('deleted')
+      else return res.status(404).json({ error: 'Not found' })
+    } catch (e: unknown) {
+      return res.status(500).json({ error: 'Error deleting' })
+    }
+  }
 }

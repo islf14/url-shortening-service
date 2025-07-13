@@ -34,16 +34,16 @@ export class UrlModel {
       const { insertedId } = await db.insertOne(newShorten)
       client.close()
       return insertedId
-    } catch (e) {
+    } catch (e: unknown) {
       client.close()
-      throw new Error('Error creating data')
+      throw new Error('Error creating.')
     }
   }
 
-  static async view({ short }: { short: string }) {
+  static async view({ shortCode }: { shortCode: string }) {
     // console.log(short)
     const { client, db } = await connect()
-    const data = await db.findOne({ shortCode: short })
+    const data = await db.findOne({ shortCode })
     client.close()
     return data
   }
@@ -61,11 +61,21 @@ export class UrlModel {
       )
       client.close()
       return modifiedCount
-    } catch (e) {
+    } catch (e: unknown) {
       client.close()
-      throw new Error('Error updating url')
+      throw new Error('Error updating.')
     }
   }
 
-  static delete() {}
+  static async delete({ shortCode }: { shortCode: string }) {
+    const { client, db } = await connect()
+    try {
+      const { deletedCount } = await db.deleteOne({ shortCode })
+      client.close()
+      return deletedCount
+    } catch (e: unknown) {
+      client.close()
+      throw new Error('Error deleting.')
+    }
+  }
 }
