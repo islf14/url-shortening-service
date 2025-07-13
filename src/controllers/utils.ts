@@ -1,6 +1,6 @@
 import { UrlModel } from '../models/url.model'
 
-export async function ShortName({ url }: { url: string }) {
+export async function shortName({ url }: { url: string }) {
   // filter only letters
   const clean = url.replace(/\.|(www)|(com)/g, '')
   // letters from url for search

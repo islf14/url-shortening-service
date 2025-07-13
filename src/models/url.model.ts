@@ -18,16 +18,15 @@ export class UrlModel {
   static async getAll() {
     const { client, db } = await connect()
     const data = await db.find().toArray()
-    console.log(data)
     client.close()
-    return { data }
+    return data
   }
 
-  static async create({ url, name }: { url: string; name: string }) {
+  static async create({ url, shortCode }: { url: string; shortCode: string }) {
     const { client, db } = await connect()
     const newShorten = {
       url,
-      shortCode: name,
+      shortCode,
       createdAt: new Date(),
       updatedAt: new Date()
     }
@@ -37,20 +36,36 @@ export class UrlModel {
       return insertedId
     } catch (e) {
       client.close()
-      throw new Error('error creating data')
+      throw new Error('Error creating data')
     }
   }
 
   static async view({ short }: { short: string }) {
-    console.log(short)
+    // console.log(short)
     const { client, db } = await connect()
     const data = await db.findOne({ shortCode: short })
     client.close()
     return data
-    // return data
   }
 
-  static update() {}
+  static async update({ shortCode, url }: { shortCode: string; url: string }) {
+    const { client, db } = await connect()
+    const updateUrl = {
+      url,
+      updatedAt: new Date()
+    }
+    try {
+      const { modifiedCount } = await db.updateOne(
+        { shortCode },
+        { $set: updateUrl }
+      )
+      client.close()
+      return modifiedCount
+    } catch (e) {
+      client.close()
+      throw new Error('Error updating url')
+    }
+  }
 
   static delete() {}
 }
