@@ -1,3 +1,4 @@
+import { Code, Shorten } from '../types'
 import { connection } from './connection'
 
 async function connect() {
@@ -12,13 +13,6 @@ async function connect() {
     throw new Error('Error connecting: ' + message)
   }
 }
-
-type Shorten = {
-  shortCode: string
-  url: string
-}
-
-type Code = Pick<Shorten, 'shortCode'>
 
 export class UrlModel {
   //

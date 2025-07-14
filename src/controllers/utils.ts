@@ -21,7 +21,7 @@ export async function shortName({ url }: { url: string }) {
         const name = clean.slice(0, threeCount) + stringRandom(3 - threeCount)
         newName = name + numberRandom(3)
         // ask the db if the name exists
-        const data = await UrlModel.view({ short: newName })
+        const data = await UrlModel.view({ shortCode: newName })
         if (data === null) validName = true
         fiveCount++
       } while (fiveCount < 5 && validName === false)
@@ -32,7 +32,7 @@ export async function shortName({ url }: { url: string }) {
     } else {
       newName = stringRandom(3) + numberRandom(3)
       // ask the db if the name exists
-      const data = await UrlModel.view({ short: newName })
+      const data = await UrlModel.view({ shortCode: newName })
       if (data === null) validName = true
       limitCount++
     }

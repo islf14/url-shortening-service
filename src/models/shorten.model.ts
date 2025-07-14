@@ -1,3 +1,4 @@
+import { Code } from '../types'
 import { connection } from './connection'
 
 async function connect() {
@@ -11,10 +12,6 @@ async function connect() {
     if (e instanceof Error) message = e.message
     throw new Error('Error connecting: ' + message)
   }
-}
-
-type Code = {
-  shortCode: string
 }
 
 export class ShortenModel {
