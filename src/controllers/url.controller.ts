@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import { UrlModel } from '../models/url.model'
 import { shortName } from './utils'
+import { ShortenModel } from '../models/shorten.model'
 
 export class Urlcontroller {
   public async getAll(_req: Request, res: Response) {
@@ -38,15 +39,11 @@ export class Urlcontroller {
     // create in db
     try {
       const insertedId = await UrlModel.create({
-        url: newUrl.href,
-        shortCode
-      })
-      const result = {
         shortCode,
-        insertedId
-      }
-      // console.log(result)
-      return res.status(201).json(result)
+        url: newUrl.href
+      })
+      console.log('created shortener: ', insertedId)
+      return res.status(201).json({ shortCode })
     } catch (e: unknown) {
       let message
       if (e instanceof Error) message = e.message
@@ -115,9 +112,11 @@ export class Urlcontroller {
       return res.status(400).json({ error: 'pathname must be six characters' })
     }
     try {
-      const deletedCount = await UrlModel.delete({ shortCode: short })
-      if (deletedCount) return res.status(204).json('deleted')
-      else return res.status(404).json({ error: 'Not found' })
+      const deletedCountUrl = await UrlModel.delete({ shortCode: short })
+      if (deletedCountUrl) {
+        await ShortenModel.delete({ shortCode: short })
+        return res.status(204).json('deleted')
+      } else return res.status(404).json({ error: 'Not found' })
     } catch (e: unknown) {
       return res.status(500).json({ error: 'Error deleting' })
     }

@@ -11,4 +11,6 @@ urlRoute.post('/', urlController.create)
 urlRoute.get('/:short', urlController.view)
 urlRoute.put('/:short', urlController.update)
 urlRoute.delete('/:short', urlController.delete)
+//
 urlRoute.get('/:short/stats', shortenController.stats)
+urlRoute.get('/visit/:short', shortenController.visit)

@@ -13,11 +13,45 @@ async function connect() {
   }
 }
 
+type Code = {
+  shortCode: string
+}
+
 export class ShortenModel {
-  static async stats({ shortCode }: { shortCode: string }) {
+  static async stats({ shortCode }: Code) {
     const { client, db } = await connect()
     const data = await db.findOne({ shortCode })
     client.close()
     return data
+  }
+
+  static async create({ shortCode }: Code) {
+    const { client, db } = await connect()
+    const data = {
+      shortCode,
+      accessCount: 1,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }
+    const { insertedId } = await db.insertOne(data)
+    client.close()
+    return insertedId
+  }
+
+  static async update({ shortCode }: Code) {
+    const { client, db } = await connect()
+    const { modifiedCount } = await db.updateOne(
+      { shortCode },
+      { $set: { updatedAt: new Date() }, $inc: { accessCount: 1 } }
+    )
+    client.close()
+    return modifiedCount
+  }
+
+  static async delete({ shortCode }: Code) {
+    const { client, db } = await connect()
+    const { deletedCount } = await db.deleteOne({ shortCode })
+    client.close()
+    return deletedCount
   }
 }

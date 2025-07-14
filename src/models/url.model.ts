@@ -13,6 +13,13 @@ async function connect() {
   }
 }
 
+type Shorten = {
+  shortCode: string
+  url: string
+}
+
+type Code = Pick<Shorten, 'shortCode'>
+
 export class UrlModel {
   //
   static async getAll() {
@@ -22,7 +29,7 @@ export class UrlModel {
     return data
   }
 
-  static async create({ url, shortCode }: { url: string; shortCode: string }) {
+  static async create({ shortCode, url }: Shorten) {
     const { client, db } = await connect()
     const newShorten = {
       url,
@@ -40,7 +47,7 @@ export class UrlModel {
     }
   }
 
-  static async view({ shortCode }: { shortCode: string }) {
+  static async view({ shortCode }: Code) {
     // console.log(short)
     const { client, db } = await connect()
     const data = await db.findOne({ shortCode })
@@ -48,7 +55,7 @@ export class UrlModel {
     return data
   }
 
-  static async update({ shortCode, url }: { shortCode: string; url: string }) {
+  static async update({ shortCode, url }: Shorten) {
     const { client, db } = await connect()
     const updateUrl = {
       url,
@@ -67,7 +74,7 @@ export class UrlModel {
     }
   }
 
-  static async delete({ shortCode }: { shortCode: string }) {
+  static async delete({ shortCode }: Code) {
     const { client, db } = await connect()
     try {
       const { deletedCount } = await db.deleteOne({ shortCode })
