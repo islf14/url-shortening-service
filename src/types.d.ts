@@ -4,3 +4,8 @@ export type Shorten = {
 }
 
 export type Code = Pick<Shorten, 'shortCode'>
+
+export type Pagination = {
+  pageNumber: number
+  nPerPage: number
+}

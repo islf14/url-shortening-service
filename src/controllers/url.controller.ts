@@ -1,13 +1,39 @@
 import { Request, Response } from 'express'
 import { UrlModel } from '../models/url.model'
-import { shortName } from './utils'
-import { ShortenModel } from '../models/shorten.model'
+import { parseStringQuery, shortName } from './utils'
+import { VisitModel } from '../models/visit.model'
+import { VisitController } from './visit.controller'
 
 export class Urlcontroller {
-  public async getAll(_req: Request, res: Response) {
+  public async getAll(req: Request, res: Response) {
+    //set page and limit
+    let pageNumber = 1
+    let nPerPage = 20
+    if (req.query && req.query.page) {
+      const page = parseInt(parseStringQuery(req.query.page))
+      if (!isNaN(page) && !(page <= 0)) pageNumber = page
+    }
+    if (req.query && req.query.limit) {
+      const limit = parseInt(parseStringQuery(req.query.limit))
+      if (!isNaN(limit) && !(limit <= 0)) nPerPage = limit
+    }
+    // count all documents
+    let count
     try {
-      const data = await UrlModel.getAll()
-      return res.status(200).json(data)
+      count = await UrlModel.countAll()
+    } catch (e: unknown) {
+      console.log({ error: 'error getting count' })
+    }
+    // getting all data
+    try {
+      const shorteners = await UrlModel.getAll({ pageNumber, nPerPage })
+      const allData = {
+        data: shorteners,
+        page: pageNumber,
+        limit: nPerPage,
+        total: count
+      }
+      return res.status(200).json(allData)
     } catch (e: unknown) {
       if (e instanceof Error) console.log({ error: e.message })
       return res.status(400).json({ error: 'Error getting all' })
@@ -42,7 +68,7 @@ export class Urlcontroller {
         shortCode,
         url: newUrl.href
       })
-      console.log('created shortener: ', insertedId)
+      console.log(`created shortener: ${shortCode}:`, insertedId)
       return res.status(201).json({ shortCode })
     } catch (e: unknown) {
       let message
@@ -58,11 +84,17 @@ export class Urlcontroller {
     if (short.length !== 6) {
       return res.status(400).json({ error: 'pathname must be six characters' })
     }
-    // search in db
+    // search in db and increases visits
     try {
       const data = await UrlModel.view({ shortCode: short })
-      if (data) return res.status(200).json(data)
-      else return res.status(404).json({ message: 'not found' })
+      if (data) {
+        // *** visit counter ***
+        await VisitController.registerVisit({ shortCode: short })
+        // *********************
+        return res.status(200).json(data)
+      } else {
+        return res.status(404).json({ message: 'not found' })
+      }
     } catch (e: unknown) {
       let message
       if (e instanceof Error) message = e.message
@@ -114,7 +146,7 @@ export class Urlcontroller {
     try {
       const deletedCountUrl = await UrlModel.delete({ shortCode: short })
       if (deletedCountUrl) {
-        await ShortenModel.delete({ shortCode: short })
+        await VisitModel.delete({ shortCode: short })
         return res.status(204).json('deleted')
       } else return res.status(404).json({ error: 'Not found' })
     } catch (e: unknown) {

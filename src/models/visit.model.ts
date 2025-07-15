@@ -14,7 +14,7 @@ async function connect() {
   }
 }
 
-export class ShortenModel {
+export class VisitModel {
   static async stats({ shortCode }: Code) {
     const { client, db } = await connect()
     const data = await db.findOne({ shortCode })

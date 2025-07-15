@@ -1,4 +1,4 @@
-import { Code, Shorten } from '../types'
+import { Code, Pagination, Shorten } from '../types'
 import { connection } from './connection'
 
 async function connect() {
@@ -16,9 +16,21 @@ async function connect() {
 
 export class UrlModel {
   //
-  static async getAll() {
+  static async countAll() {
     const { client, db } = await connect()
-    const data = await db.find().toArray()
+    const count = await db.countDocuments()
+    client.close()
+    return count
+  }
+
+  static async getAll({ pageNumber, nPerPage }: Pagination) {
+    const { client, db } = await connect()
+    const data = await db
+      .find()
+      .sort({ createAt: 1 })
+      .skip(pageNumber > 1 ? (pageNumber - 1) * nPerPage : 0)
+      .limit(nPerPage)
+      .toArray()
     client.close()
     return data
   }

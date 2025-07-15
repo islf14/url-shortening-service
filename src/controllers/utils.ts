@@ -62,3 +62,13 @@ function numberRandom(length: number) {
   const strRdm = Math.random().toString().split('.')[1].slice(0, length)
   return strRdm
 }
+
+export const parseStringQuery = (stringFromQuery: any): string => {
+  if (isString(stringFromQuery)) {
+    return stringFromQuery
+  } else return ''
+}
+
+const isString = (string: any): boolean => {
+  return typeof string === 'string' || string instanceof String
+}
