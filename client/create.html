@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shortener</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main>
+      <div class="form">
+        <h2>Shortener Url</h2>
+        <input
+          id="url"
+          type="text"
+          placeholder="Enter URL"
+          autocomplete="off"
+        />
+        <input type="button" id="clear" value="X" />
+        <div>
+          <span id="message"></span>
+        </div>
+        <input type="submit" value="Create" />
+      </div>
+      <div style="display: none" id="result" class="result">
+        <input type="text" id="short" readonly />
+        <input type="button" id="copy" value="Copy" />
+        <div class="divgo">
+          <a id="go" target="_blank" href="">Go shortened url</a>
+        </div>
+      </div>
+    </main>
+    <script src="./create.js"></script>
+  </body>
+</html>

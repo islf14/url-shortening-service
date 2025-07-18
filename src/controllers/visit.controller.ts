@@ -37,6 +37,27 @@ export class VisitController {
     })
   }
 
+  public async visit(req: Request, res: Response) {
+    // verify pathname
+    const { short } = req.params
+    if (short.length !== 6) {
+      return res.status(400).json({ error: 'pathname must be six characters' })
+    }
+    // verify if exist
+    try {
+      const data = await UrlModel.view({ shortCode: short })
+      if (data) {
+        await VisitController.registerVisit({ shortCode: short })
+        return res.redirect(data.url)
+      } else return res.status(404).json({ message: 'not found' })
+    } catch (e: unknown) {
+      let message
+      if (e instanceof Error) message = e.message
+      console.log({ error: 'Error finding url: ' + message })
+      return res.status(500).json({ error: 'Error finding url' })
+    }
+  }
+
   static async registerVisit({ shortCode }: Code) {
     // update visit
     try {

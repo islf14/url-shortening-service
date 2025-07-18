@@ -1,0 +1,57 @@
+body {
+  background-color: rgb(206, 206, 206);
+}
+
+h2 {
+  margin-bottom: 0;
+}
+
+main {
+  max-width: 500px;
+  min-width: 300px;
+  margin: auto;
+  padding: 1.3em;
+}
+
+.form,
+.result {
+  background-color: white;
+  margin-bottom: 10px;
+  text-align: center;
+  border-radius: 10px;
+  border: 1px solid black;
+}
+
+#url {
+  font-size: 1em;
+  width: 80%;
+  margin: 1.2em 0;
+  height: 1.9em;
+}
+
+#short {
+  width: 73%;
+  height: 1.9em;
+  margin: 1.2em 0;
+  font-size: 1em;
+}
+
+#clear,
+#copy {
+  font-size: 1em;
+  height: 2.1em;
+}
+
+input[type='submit'] {
+  margin: 5px;
+  padding: 10px;
+  margin-bottom: 1.1em;
+}
+
+input[type='button'] {
+  margin-bottom: 1.2em;
+}
+
+.divgo {
+  margin-bottom: 1.2em;
+}

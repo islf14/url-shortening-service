@@ -30,6 +30,12 @@ npm run build
 npm run start
 ```
 
+- To use URL Shortening, open in your browser. (port assigned or port 3000)
+
+```bash
+http://localhost:3000/
+```
+
 ### API Endpoints
 
 - Create Short URL
@@ -37,70 +43,64 @@ npm run start
 ```bash
 POST /shorten
 {
-  "url": "https://www.example.com/some/long/url"
+  "url": "https://roadmap.sh/projects/url-shortening-service"
 }
 ```
 
 - Retrieve Original URL
 
 ```bash
-GET /shorten/abc123
+GET /shorten/roa823
 ```
 
 ```bash
 {
-  "id": "1",
-  "url": "https://www.example.com/some/long/url",
-  "shortCode": "abc123",
-  "createdAt": "2021-09-01T12:00:00Z",
-  "updatedAt": "2021-09-01T12:00:00Z"
+  "_id": "687a909b42dee4616f1c5730",
+  "url": "https://roadmap.sh/projects/url-shortening-service",
+  "shortCode": "roa823",
+  "createdAt": "2025-07-18T18:21:15.414Z",
+  "updatedAt": "2025-07-18T18:21:15.414Z"
 }
 ```
 
 - Update Short URL
 
 ```bash
-PUT /shorten/abc123
+PUT /shorten/roa823
 {
-  "url": "https://www.example.com/some/updated/url"
+  "url": "https://roadmap.sh/backend/projects"
 }
 ```
 
 ```bash
 {
-  "id": "1",
-  "url": "https://www.example.com/some/updated/url",
-  "shortCode": "abc123",
-  "createdAt": "2021-09-01T12:00:00Z",
-  "updatedAt": "2021-09-01T12:30:00Z"
+  "_id": "687a909b42dee4616f1c5730",
+  "url": "https://roadmap.sh/backend/projects",
+  "shortCode": "roa823",
+  "createdAt": "2025-07-18T18:21:15.414Z",
+  "updatedAt": "2025-07-18T18:24:03.654Z"
 }
 ```
 
 - Delete Short URL
 
 ```bash
-DELETE /shorten/abc123
+DELETE /shorten/roa823
 ```
 
-- Delete Short URL
+- Get URL Statistics
 
 ```bash
-GET /shorten/abc123/stats
+GET /shorten/roa823/stats
 ```
 
 ```bash
 {
-  "id": "1",
-  "url": "https://www.example.com/some/long/url",
-  "shortCode": "abc123",
-  "createdAt": "2021-09-01T12:00:00Z",
-  "updatedAt": "2021-09-01T12:00:00Z",
-  "accessCount": 10
+  "_id": "687a92b142dee4616f1c5732",
+  "url": "https://roadmap.sh/projects/url-shortening-service",
+  "shortCode": "roa823",
+  "createdAt": "2025-07-18T18:30:09.195Z",
+  "updatedAt": "2025-07-18T18:30:09.195Z",
+  "accessCount": 7
 }
-```
-
-- To use short URL, open in your browser. (port assigned or port 3000)
-
-```bash
-http://localhost:3000/abc123
 ```
