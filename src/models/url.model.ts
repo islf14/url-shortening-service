@@ -16,12 +16,15 @@ async function connect() {
 
 export class UrlModel {
   //
+
   static async countAll() {
     const { client, db } = await connect()
     const count = await db.countDocuments()
     client.close()
     return count
   }
+
+  //
 
   static async getAll({ pageNumber, nPerPage }: Pagination) {
     const { client, db } = await connect()
@@ -34,6 +37,8 @@ export class UrlModel {
     client.close()
     return data
   }
+
+  //
 
   static async create({ shortCode, url }: Shorten) {
     const { client, db } = await connect()
@@ -53,13 +58,16 @@ export class UrlModel {
     }
   }
 
+  //
+
   static async view({ shortCode }: Code) {
-    // console.log(short)
     const { client, db } = await connect()
     const data = await db.findOne({ shortCode })
     client.close()
     return data
   }
+
+  //
 
   static async update({ shortCode, url }: Shorten) {
     const { client, db } = await connect()
@@ -80,6 +88,8 @@ export class UrlModel {
     }
   }
 
+  //
+
   static async delete({ shortCode }: Code) {
     const { client, db } = await connect()
     try {
@@ -91,4 +101,6 @@ export class UrlModel {
       throw new Error('Error deleting.')
     }
   }
+
+  //
 }

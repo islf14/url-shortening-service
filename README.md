@@ -1,6 +1,6 @@
-# URL Shortening Service
+# URL Shortening
 
-JavaScript solution for [URL Shortening Service](https://roadmap.sh/projects/url-shortening-service) from [roadmap.sh](https://roadmap.sh/).
+A URL shortening service that creates a six-character path: three letters and three numbers. This website is developed on the backend with Node.js, Express Js, TypeScript, and MongoDB, while the frontend uses HTML, CSS, and JavaScript.
 
 ## Requirements
 
@@ -43,21 +43,21 @@ http://localhost:3000/
 ```bash
 POST /shorten
 {
-  "url": "https://roadmap.sh/projects/url-shortening-service"
+  "url": "https://expressjs.com/"
 }
 ```
 
 - Retrieve Original URL
 
 ```bash
-GET /shorten/roa823
+GET /shorten/exp823
 ```
 
 ```bash
 {
   "_id": "687a909b42dee4616f1c5730",
-  "url": "https://roadmap.sh/projects/url-shortening-service",
-  "shortCode": "roa823",
+  "url": "hhttps://expressjs.com/",
+  "shortCode": "exp823",
   "createdAt": "2025-07-18T18:21:15.414Z",
   "updatedAt": "2025-07-18T18:21:15.414Z"
 }
@@ -66,17 +66,17 @@ GET /shorten/roa823
 - Update Short URL
 
 ```bash
-PUT /shorten/roa823
+PUT /shorten/exp823
 {
-  "url": "https://roadmap.sh/backend/projects"
+  "url": "https://expressjs.com/"
 }
 ```
 
 ```bash
 {
   "_id": "687a909b42dee4616f1c5730",
-  "url": "https://roadmap.sh/backend/projects",
-  "shortCode": "roa823",
+  "url": "https://expressjs.com/",
+  "shortCode": "exp823",
   "createdAt": "2025-07-18T18:21:15.414Z",
   "updatedAt": "2025-07-18T18:24:03.654Z"
 }
@@ -85,20 +85,20 @@ PUT /shorten/roa823
 - Delete Short URL
 
 ```bash
-DELETE /shorten/roa823
+DELETE /shorten/exp823
 ```
 
 - Get URL Statistics
 
 ```bash
-GET /shorten/roa823/stats
+GET /shorten/exp823/stats
 ```
 
 ```bash
 {
   "_id": "687a92b142dee4616f1c5732",
-  "url": "https://roadmap.sh/projects/url-shortening-service",
-  "shortCode": "roa823",
+  "url": "https://expressjs.com/",
+  "shortCode": "exp823",
   "createdAt": "2025-07-18T18:30:09.195Z",
   "updatedAt": "2025-07-18T18:30:09.195Z",
   "accessCount": 7

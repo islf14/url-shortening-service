@@ -2,9 +2,11 @@ import { Request, Response } from 'express'
 import { UrlModel } from '../models/url.model'
 import { parseStringQuery, shortName } from './utils'
 import { VisitModel } from '../models/visit.model'
-import { VisitController } from './visit.controller'
+// import { VisitController } from './visit.controller'
 
 export class Urlcontroller {
+  //
+
   public async getAll(req: Request, res: Response) {
     //set page and limit
     let pageNumber = 1
@@ -40,6 +42,8 @@ export class Urlcontroller {
     }
   }
 
+  //
+
   public async create(req: Request, res: Response) {
     // verify json with url
     if (!req.body || !req.body.url) {
@@ -64,11 +68,10 @@ export class Urlcontroller {
     }
     // create in db
     try {
-      const insertedId = await UrlModel.create({
+      await UrlModel.create({
         shortCode,
         url: newUrl.href
       })
-      console.log(`created shortener: ${shortCode}:`, insertedId)
       return res.status(201).json({ shortCode })
     } catch (e: unknown) {
       let message
@@ -77,6 +80,8 @@ export class Urlcontroller {
       return res.status(400).json('Error saving url')
     }
   }
+
+  //
 
   public async view(req: Request, res: Response) {
     // verify pathname
@@ -89,7 +94,7 @@ export class Urlcontroller {
       const data = await UrlModel.view({ shortCode: short })
       if (data) {
         // *** visit counter ***
-        await VisitController.registerVisit({ shortCode: short })
+        // await VisitController.registerVisit({ shortCode: short })
         // *********************
         return res.status(200).json(data)
       } else {
@@ -102,6 +107,8 @@ export class Urlcontroller {
       return res.status(500).json({ error: 'Error in view' })
     }
   }
+
+  //
 
   public async update(req: Request, res: Response) {
     // verify pathname
@@ -136,6 +143,8 @@ export class Urlcontroller {
       return res.status(500).json({ error: 'Error in update' })
     }
   }
+
+  //
 
   public async delete(req: Request, res: Response) {
     // verify pathname
