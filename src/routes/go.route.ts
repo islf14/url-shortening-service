@@ -10,4 +10,9 @@ goRoute.get('/', (_req, res) => {
   res.sendFile(process.cwd() + '/client/create.html')
 })
 
+goRoute.get('/w', (_req, res) => {
+  const path = process.cwd() + '/client/create.html'
+  res.status(200).json({ path })
+})
+
 goRoute.get('/:short', visitController.visit)
