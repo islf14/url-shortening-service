@@ -1,11 +1,18 @@
 const $ = (el) => document.querySelector(el)
 
+window.onload = function () {
+  $('#url').focus()
+}
+
+// click X button to clear the fields
 $('#clear').addEventListener('click', () => {
   $('#result').style.display = 'none'
   $('#url').value = ''
+  $('#url').focus()
   $('#message').innerText = ''
 })
 
+// click copy button
 $('#copy').addEventListener('click', async () => {
   const short = $('#short').value.trim()
   if (short) {
@@ -24,7 +31,10 @@ function message(msg, color) {
   $('#message').style.color = color
 }
 
-$('[type=submit]').addEventListener('click', () => {
+// cClick the Create button; when it has been created,
+// change the focus to Result.
+$('[type=submit]').addEventListener('click', (e) => {
+  e.preventDefault()
   $('#result').style.display = 'none'
   const url = $('#url').value.trim()
   if (url) {

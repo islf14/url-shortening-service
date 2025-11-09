@@ -3,30 +3,76 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="./assets/favicon.ico" />
     <title>Shortener</title>
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
     <main>
-      <div class="form">
-        <h2>Shortener Url</h2>
-        <input
-          id="url"
-          type="text"
-          placeholder="Enter URL"
-          autocomplete="off"
-        />
-        <input type="button" id="clear" value="X" />
-        <div>
-          <span id="message"></span>
+      <!-- create url -->
+      <form class="container text-white p-1 md:p-2">
+        <h1 class="mt-1">URL Shortener</h1>
+        <div class="message">
+          <span>Shorten URLs instantly and for free</span>
         </div>
-        <input type="submit" value="Create" />
-      </div>
-      <div style="display: none" id="result" class="result">
-        <input type="text" id="short" readonly />
-        <input type="button" id="copy" value="Copy" />
-        <div class="divgo">
-          <a id="go" target="_blank" href="">Go shortened url</a>
+        <div class="flex gap mt-2">
+          <div class="grow shrink">
+            <input
+              id="url"
+              class="input-url text-white w-full"
+              type="text"
+              placeholder="Enter o paste the URL."
+              autocomplete="off"
+            />
+          </div>
+          <!-- clear button -->
+          <input
+            type="button"
+            id="clear"
+            class="btn btn-clear text-white"
+            value="X"
+          />
+        </div>
+        <div class="mt-1 flex flex-col">
+          <!-- submit button -->
+          <div>
+            <input type="submit" value="Create" class="text-white" />
+          </div>
+          <span id="message" class="message"></span>
+        </div>
+      </form>
+      <!-- show shortened url -->
+
+      <div
+        style="display: none"
+        id="result"
+        class="container text-white p-1 md:p-2"
+      >
+        <div class="mt-1 flex gap">
+          <div class="grow shrink">
+            <input
+              type="text"
+              id="short"
+              class="input-url text-white w-full"
+              readonly
+            />
+          </div>
+          <!-- copy button -->
+          <input
+            type="button"
+            id="copy"
+            value="Copy"
+            class="btn btn-copy text-white"
+          />
+        </div>
+        <div class="flex mt-1 mb-1 justify-center">
+          <a
+            id="go"
+            target="_blank"
+            href="#"
+            class="text-white decoration-none btn-link"
+            >Go to the shortened URL</a
+          >
         </div>
       </div>
     </main>

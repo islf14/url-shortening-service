@@ -1,57 +1,146 @@
-body {
-  background-color: rgb(206, 206, 206);
+* {
+  box-sizing: border-box;
+  border: 0 solid;
+  margin: 0;
+  padding: 0;
 }
 
-h2 {
-  margin-bottom: 0;
+body {
+  background-color: oklch(13% 0.028 261.692);
 }
+
+.mt-1 {
+  margin-top: 1rem;
+}
+.mt-2 {
+  margin-top: 2rem;
+}
+.mb-1 {
+  margin-bottom: 1rem;
+}
+.flex {
+  display: flex;
+}
+.flex-col {
+  flex-direction: column;
+}
+.gap {
+  gap: 0.5rem;
+}
+.grow {
+  flex-grow: 1;
+}
+.shrink {
+  flex-shrink: 1;
+}
+.text-white {
+  color: white;
+}
+.p-1 {
+  padding: 1rem;
+}
+.w-full {
+  width: 100%;
+}
+.decoration-none {
+  text-decoration: none;
+}
+.justify-center {
+  justify-content: center;
+}
+
+@media (width >= 48rem) {
+  .md\:p-2 {
+    padding: 2rem;
+  }
+}
+
+/* specific */
 
 main {
-  max-width: 500px;
+  max-width: 600px;
   min-width: 300px;
   margin: auto;
   padding: 1.3em;
 }
 
-.form,
-.result {
-  background-color: white;
+.container {
+  background-color: oklch(21% 0.034 264.665);
   margin-bottom: 10px;
   text-align: center;
   border-radius: 10px;
-  border: 1px solid black;
+  border: 1px solid rgb(54, 53, 53);
 }
 
-#url {
-  font-size: 1em;
-  width: 80%;
-  margin: 1.2em 0;
-  height: 1.9em;
+.message {
+  margin-top: 0.5rem;
 }
 
-#short {
-  width: 73%;
-  height: 1.9em;
-  margin: 1.2em 0;
+.input-url {
   font-size: 1em;
+  padding-block: 0.625rem;
+  padding-inline: 0.75rem;
+  background-color: oklab(14% 0.00711 -0.04228);
+  border-radius: 0.375rem;
+  outline-width: 1px;
+  outline-style: solid;
+  outline-offset: 0px;
+  outline-color: oklab(24.294% -0.00345 -0.14496);
 }
 
-#clear,
-#copy {
-  font-size: 1em;
-  height: 2.1em;
+#url:focus {
+  outline-color: oklch(58.5% 0.233 277.117);
+}
+
+#short:focus {
+  outline-color: oklch(60.555% 0.16327 148.131);
 }
 
 input[type='submit'] {
-  margin: 5px;
   padding: 10px;
-  margin-bottom: 1.1em;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  background-color: oklab(67.683% -0.08048 -0.08904);
 }
 
-input[type='button'] {
-  margin-bottom: 1.2em;
+input[type='submit']:hover {
+  outline-width: 1px;
+  outline-style: solid;
+  outline-color: rgb(65, 220, 114);
+  outline-offset: 0px;
 }
 
-.divgo {
-  margin-bottom: 1.2em;
+.btn {
+  padding-block: 0.625rem;
+  padding-inline: 0.875rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+}
+
+.btn-clear {
+  background-color: rgb(213, 77, 95);
+}
+
+.btn-clear:hover {
+  outline: 1px solid rgb(228, 13, 52);
+}
+
+.btn-copy {
+  background-color: rgb(51, 200, 51);
+}
+
+.btn-copy:hover {
+  outline: 1px solid rgb(86, 216, 158);
+}
+
+.btn-link {
+  /* background-color: rgb(11, 201, 62); */
+  padding: 0.42rem;
+  border-radius: 1.3rem;
+  border: 1px solid rgb(232, 232, 237);
+}
+
+.btn-link:hover {
+  border-color: rgb(85, 231, 231);
+  background-color: rgb(4, 4, 116);
 }
