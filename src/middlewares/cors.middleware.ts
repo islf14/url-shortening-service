@@ -1,8 +1,8 @@
 import cors from 'cors'
 import type { StaticOrigin } from '../types'
-import { port } from '../constants'
+import { appOrigin, port } from '../constants'
 
-const ACCEPTED_ORIGINS = [`http://localhost:${port}`]
+const ACCEPTED_ORIGINS = [`http://localhost:${port}`, appOrigin]
 
 export const corsMiddleware = (whitelist: string[] = ACCEPTED_ORIGINS) => {
   return cors({

@@ -11,3 +11,5 @@ export const secureStatus = process.env.NODE_ENV === 'production'
 const DEFAULT_CONNECTION =
   'mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.3.8'
 export const uri = process.env.MONGODB_URI ?? DEFAULT_CONNECTION
+
+export const appOrigin = process.env.APP_ORIGIN ?? ''
