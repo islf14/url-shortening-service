@@ -34,3 +34,8 @@ export type Payload = {
   email: string
   type: string
 }
+
+export type Rate = {
+  times: number
+  minutes: number
+}
