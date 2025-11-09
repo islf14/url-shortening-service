@@ -10,6 +10,7 @@ export const corsMiddleware = (whitelist: string[] = ACCEPTED_ORIGINS) => {
       origin: string | undefined,
       callback: (err: Error | null, origin?: StaticOrigin) => void
     ) {
+      console.log(origin)
       if (!origin || whitelist.indexOf(origin) !== -1) {
         callback(null, true)
       } else {
