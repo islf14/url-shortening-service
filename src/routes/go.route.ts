@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import { VisitController } from '../controllers/visit.controller'
+import { join } from 'node:path'
 
 // "/"
 export const goRoute = Router()
@@ -11,7 +12,7 @@ goRoute.get('/', (_req, res) => {
 })
 
 goRoute.get('/w', (_req, res) => {
-  const path = process.cwd() + '/client/create.html'
+  const path = join(__dirname, '../..', 'client/create.html')
   res.status(200).json({ path })
 })
 

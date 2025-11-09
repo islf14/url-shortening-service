@@ -1,5 +1,6 @@
 import express, { json } from 'express'
 import cookieParser from 'cookie-parser'
+import { join } from 'node:path'
 import 'dotenv/config'
 import { authRoute } from './routes/auth.route'
 import { urlRoute } from './routes/url.route'
@@ -15,7 +16,7 @@ app.use(ecors())
 app.use(csp())
 app.use(json())
 app.use(cookieParser())
-app.use(express.static('./client'))
+app.use(express.static(join(__dirname, '..', 'client')))
 app.use('/shorten', urlRoute)
 app.use('/', goRoute)
 app.use('/auth', authRoute)
