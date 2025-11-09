@@ -1,5 +1,4 @@
 import { type NextFunction, type Request, type Response } from 'express'
-import { appOrigin } from '../constants'
 export function ecors() {
   return function (
     err: Error,
@@ -11,8 +10,7 @@ export function ecors() {
     if (err && err.message === 'Not allowed by CORS') {
       res.status(400).json({
         error: 'Bad Request',
-        message: 'This origin is not allowed by the CORS policy.',
-        origin: appOrigin
+        message: 'This origin is not allowed by the CORS policy.'
       })
     } else {
       // Pass other errors down the chain

@@ -22,5 +22,5 @@ app.use('/', goRoute)
 app.use('/auth', authRoute)
 
 app.listen(port, () => {
-  console.log(`Server is listening in http://localhost:${port}`)
+  console.log(`Server is listening in port ${port}`)
 })
