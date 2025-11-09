@@ -1,11 +1,11 @@
-import express, { json } from 'express'
 import cookieParser from 'cookie-parser'
+import express, { json } from 'express'
 import { join } from 'node:path'
 import 'dotenv/config'
+import { corsMiddleware } from './middlewares/cors.middleware'
 import { authRoute } from './routes/auth.route'
 import { urlRoute } from './routes/url.route'
 import { goRoute } from './routes/go.route'
-import { corsMiddleware } from './middlewares/cors.middleware'
 import { ecors } from './middlewares/errorCors.middleware'
 import { port } from './constants'
 import { csp } from './middlewares/csp.middleware'
@@ -16,7 +16,7 @@ app.use(ecors())
 app.use(csp())
 app.use(json())
 app.use(cookieParser())
-app.use(express.static(join(__dirname, '..', 'client')))
+app.use(express.static(join(process.cwd(), 'client')))
 app.use('/shorten', urlRoute)
 app.use('/', goRoute)
 app.use('/auth', authRoute)

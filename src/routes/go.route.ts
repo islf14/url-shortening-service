@@ -7,13 +7,7 @@ export const goRoute = Router()
 const visitController = new VisitController()
 
 goRoute.get('/', (_req, res) => {
-  console.log(process.cwd() + '/client/create.html')
-  res.sendFile(process.cwd() + '/client/create.html')
-})
-
-goRoute.get('/w', (_req, res) => {
-  const path = join(__dirname, '../..', 'client/create.html')
-  res.status(200).json({ path })
+  res.sendFile(join(process.cwd(), 'client/create.html'))
 })
 
 goRoute.get('/:short', visitController.visit)
